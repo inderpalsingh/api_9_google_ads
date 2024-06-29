@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:api_9_google_ads/screens/interstitial_ads.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
 
 
   BannerAd? _bannerAd;
+
   bool isLoading = false;
 
 
@@ -35,15 +37,40 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           Expanded(
-            flex: 9,
+            flex: 7,
             child: Container(
-              color: Colors.amber
+              color: Colors.amber,
+
             ),
           ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const InterstitialAds()));
+
+                    },
+                    child: const Text('Interstitial Ads'),
+                  ),
+
+              ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const InterstitialAds()));
+
+                    },
+                    child: const Text('Rewarded Ads'),
+                  ),
+            ],
+          ),
+          const SizedBox(height: 20),
           SizedBox(
             width: _bannerAd!.size.width.toDouble(),
             height: _bannerAd!.size.height.toDouble(),
-            child: isLoading ? AdWidget(ad: _bannerAd!) : const SizedBox())
+            child: isLoading ? AdWidget(ad: _bannerAd!) : const SizedBox()),
+
+
 
         ],
       ),
@@ -53,7 +80,7 @@ class _HomePageState extends State<HomePage> {
   void loadingAd(){
     _bannerAd = BannerAd(
       size: const AdSize(width: 300, height: 50),
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      adUnitId: adUnitId,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           setState(() {
@@ -68,6 +95,11 @@ class _HomePageState extends State<HomePage> {
       request: const AdRequest()
     )..load();
   }
+
+
+
+
+
 
 
 }
